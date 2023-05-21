@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Politicz.News", "src\Politicz.News\Politicz.News.csproj", "{CAEAEAA3-2F35-423F-A78C-0C59FD4EED94}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D4C89820-23EB-4B3E-8812-1D099DDD7590}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAEAEAA3-2F35-423F-A78C-0C59FD4EED94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEAEAA3-2F35-423F-A78C-0C59FD4EED94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAEAEAA3-2F35-423F-A78C-0C59FD4EED94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAEAEAA3-2F35-423F-A78C-0C59FD4EED94}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
