@@ -1,11 +1,18 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿// TODO set config from appsettings.json
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+    .CreateLogger();
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog();
 builder.Configuration.AddEnvironmentVariables("News_");
 
 builder.Services
     .AddNewsOptions(builder.Configuration)
     .AddEndpointsApiExplorer()
     .AddCors()
-    .AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo()
+    .AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "News",
         Version = "v1",
@@ -21,7 +28,9 @@ builder.Services
     });
 
 var app = builder.Build();
+app.UseSerilogRequestLogging();
 
+// TODO Global error handler
 app.UseCors(c => c
     .AllowAnyOrigin()
     .AllowAnyMethod()
