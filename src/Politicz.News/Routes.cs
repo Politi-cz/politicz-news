@@ -18,7 +18,10 @@ public static class Routes
         {
             var result =
                 await mediator.Send(new CreateNewsCommand(news));
-            return Results.Created($"/news/{result.ExternalId}", result.ToResponse());
+
+            return result.Match(
+                created => Results.Created($"/news/{created.ExternalId}", created.ToResponse()),
+                Results.BadRequest);
         });
 
         _ = newsGroup.MapGet("{id:guid}", async (IMediator mediator, Guid id, CancellationToken token) =>
@@ -36,7 +39,8 @@ public static class Routes
 
             return result.Match(
                 updated => Results.Ok(updated.ToResponse()),
-                _ => Results.NotFound());
+                _ => Results.NotFound(),
+                Results.BadRequest);
         });
 
         _ = newsGroup.MapDelete("{id:guid}", async (IMediator mediator, Guid id) =>

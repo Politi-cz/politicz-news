@@ -1,4 +1,5 @@
 ﻿// TODO set config from appsettings.json
+
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
@@ -25,7 +26,10 @@ builder.Services
     {
         o.Namespace = "Politicz.News.Mediator";
         o.ServiceLifetime = ServiceLifetime.Transient;
-    });
+    })
+    .AddScoped<IPipelineBehavior<CreateNewsCommand, OneOf<NewsEntity, Failure>>, ValidationBehavior<CreateNewsCommand, NewsEntity>>()
+    .AddScoped<IPipelineBehavior<UpdateNewsCommand, OneOf<NewsEntity, NotFound, Failure>>, ValidationBehavior<UpdateNewsCommand, NewsEntity>>()
+    .AddValidatorsFromAssemblyContaining<CreateNewsValidator>();
 
 var app = builder.Build();
 app.UseSerilogRequestLogging();

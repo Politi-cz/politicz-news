@@ -1,8 +1,8 @@
 ﻿namespace Politicz.News.Features.Commands;
 
-public sealed record UpdateNewsCommand(Guid Id, UpdateNews News) : IRequest<OneOf<NewsEntity, NotFound>>;
+public sealed record UpdateNewsCommand(Guid Id, UpdateNews News) : IRequest<OneOf<NewsEntity, NotFound, Failure>>;
 
-public sealed class UpdateNewsHandler : IRequestHandler<UpdateNewsCommand, OneOf<NewsEntity, NotFound>>
+public sealed class UpdateNewsHandler : IRequestHandler<UpdateNewsCommand, OneOf<NewsEntity, NotFound, Failure>>
 {
     private readonly INewsDbContext _dbContext;
     private readonly ILogger<UpdateNewsHandler> _logger;
@@ -13,7 +13,7 @@ public sealed class UpdateNewsHandler : IRequestHandler<UpdateNewsCommand, OneOf
         _logger = logger;
     }
 
-    public async ValueTask<OneOf<NewsEntity, NotFound>> Handle(
+    public async ValueTask<OneOf<NewsEntity, NotFound, Failure>> Handle(
         UpdateNewsCommand command,
         CancellationToken cancellationToken)
     {

@@ -1,8 +1,8 @@
 ﻿namespace Politicz.News.Features.Commands;
 
-public sealed record CreateNewsCommand(CreateNews NewsDto) : IRequest<NewsEntity>;
+public sealed record CreateNewsCommand(CreateNews NewsDto) : IRequest<OneOf<NewsEntity, Failure>>;
 
-public sealed class CreateNewsHandler : IRequestHandler<CreateNewsCommand, NewsEntity>
+public sealed class CreateNewsHandler : IRequestHandler<CreateNewsCommand, OneOf<NewsEntity, Failure>>
 {
     private readonly INewsDbContext _dbContext;
     private readonly ILogger<CreateNewsHandler> _logger;
@@ -13,7 +13,7 @@ public sealed class CreateNewsHandler : IRequestHandler<CreateNewsCommand, NewsE
         _logger = logger;
     }
 
-    public async ValueTask<NewsEntity> Handle(
+    public async ValueTask<OneOf<NewsEntity, Failure>> Handle(
         CreateNewsCommand command,
         CancellationToken cancellationToken)
     {
