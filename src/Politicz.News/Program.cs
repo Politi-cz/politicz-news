@@ -1,5 +1,4 @@
 ﻿// TODO set config from appsettings.json
-
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
@@ -8,6 +7,26 @@ Log.Logger = new LoggerConfiguration()
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
 builder.Configuration.AddEnvironmentVariables("News_");
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var jwtSettings = builder.Configuration.GetRequiredSection("JwtSettings").Get<JwtOptions>();
+        options.Authority = jwtSettings!.Authority;
+        options.Audience = jwtSettings.Audience;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            NameClaimType = ClaimTypes.NameIdentifier,
+        };
+    });
+
+builder.Services.AddAuthorization(o =>
+    o.AddPolicy(
+        AuthConstants.ModifyNewsPolicy,
+        p => p
+            .RequireClaim("permissions", AuthConstants.ModifyNewsPermission)
+            .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)));
 
 builder.Services
     .AddNewsOptions(builder.Configuration)
@@ -20,6 +39,7 @@ builder.Services
         Description = "API providing interface for operations related to news",
         Contact = new OpenApiContact { Url = new Uri("https://github.com/PetrKoller") },
     }))
+    .AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>()
     .AddScoped<NewsDbContext>()
     .AddScoped<INewsDbContext, NewsDbContext>()
     .AddMediator(o =>
@@ -27,8 +47,10 @@ builder.Services
         o.Namespace = "Politicz.News.Mediator";
         o.ServiceLifetime = ServiceLifetime.Transient;
     })
-    .AddScoped<IPipelineBehavior<CreateNewsCommand, OneOf<NewsEntity, Failure>>, ValidationBehavior<CreateNewsCommand, NewsEntity>>()
-    .AddScoped<IPipelineBehavior<UpdateNewsCommand, OneOf<NewsEntity, NotFound, Failure>>, ValidationBehavior<UpdateNewsCommand, NewsEntity>>()
+    .AddScoped<IPipelineBehavior<CreateNewsCommand, OneOf<NewsEntity, Failure>>,
+        ValidationBehavior<CreateNewsCommand, NewsEntity>>()
+    .AddScoped<IPipelineBehavior<UpdateNewsCommand, OneOf<NewsEntity, NotFound, Failure>>,
+        ValidationBehavior<UpdateNewsCommand, NewsEntity>>()
     .AddValidatorsFromAssemblyContaining<CreateNewsValidator>();
 
 var app = builder.Build();
@@ -52,8 +74,7 @@ if (!app.Environment.IsProduction())
     dbContext.Database.Migrate();
 }
 
-// app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 
-// app.UseAuthentication();
-// app.UseAuthorization();
 app.Run();
