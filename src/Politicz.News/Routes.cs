@@ -6,11 +6,10 @@ public static class Routes
 {
     public static WebApplication MapNews(this WebApplication app)
     {
-        var newsGroup = app.MapGroup("/news");
+        var newsGroup = app.MapGroup("api/news");
 
         _ = newsGroup.MapGet(string.Empty, async (IMediator mediator, CancellationToken token) =>
             {
-                throw new Exception("Testingos");
                 var news = await mediator.Send(new GetAllNewsQuery(), token);
                 return Results.Ok(news.Select(x => x.ToResponse()));
             })

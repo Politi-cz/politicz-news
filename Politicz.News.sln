@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Politicz.News", "src\Politi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D4C89820-23EB-4B3E-8812-1D099DDD7590}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Politicz.News.Test.Integration", "tests\Politicz.News.Test.Integration\Politicz.News.Test.Integration.csproj", "{D5D5AC08-8A44-4F51-89DD-5FEE88881DBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,5 +16,12 @@ Global
 		{CAEAEAA3-2F35-423F-A78C-0C59FD4EED94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAEAEAA3-2F35-423F-A78C-0C59FD4EED94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAEAEAA3-2F35-423F-A78C-0C59FD4EED94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5D5AC08-8A44-4F51-89DD-5FEE88881DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5D5AC08-8A44-4F51-89DD-5FEE88881DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5D5AC08-8A44-4F51-89DD-5FEE88881DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5D5AC08-8A44-4F51-89DD-5FEE88881DBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D5D5AC08-8A44-4F51-89DD-5FEE88881DBD} = {D4C89820-23EB-4B3E-8812-1D099DDD7590}
 	EndGlobalSection
 EndGlobal

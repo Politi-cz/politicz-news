@@ -7,7 +7,7 @@ public class NewsDbContext : DbContext, INewsDbContext
     public NewsDbContext(IOptions<DatabaseOptions> options)
         => _options = options.Value;
 
-    public required DbSet<NewsEntity> News { get; set; }
+    public DbSet<NewsEntity> News { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         base.OnConfiguring(optionsBuilder.UseSqlServer(_options.ConnectionString));
