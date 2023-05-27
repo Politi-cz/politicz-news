@@ -1,0 +1,15 @@
+name: Politi.cz News development workflow
+
+on:
+    push:
+    pull_request:
+        branches: [ main ]
+
+jobs:
+    build-and-test-app:
+        uses: Politi-cz/centralized-configuration/.github/workflows/build_and_test_dot_net_7.yaml@main
+    build-and-push-image:
+        needs: build-and-test-app
+        uses: Politi-cz/centralized-configuration/.github/workflows/build_and_publish_docker_image_ghcr.yaml@main
+        with:
+            image-name: ${{ github.repository }}
