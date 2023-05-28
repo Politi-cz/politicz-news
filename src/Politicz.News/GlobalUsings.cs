@@ -20,6 +20,5 @@ global using Politicz.News.Options;
 global using Politicz.News.Swagger;
 global using Politicz.News.Validations;
 global using Serilog;
-global using Serilog.Events;
 global using Swashbuckle.AspNetCore.SwaggerGen;
 global using System.Security.Claims;
