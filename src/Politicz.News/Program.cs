@@ -1,10 +1,9 @@
 ﻿var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
-builder.Configuration.AddEnvironmentVariables("News_");
+builder.Configuration.AddEnvironmentVariables("NewsApi_");
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
-    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
     .CreateLogger();
 
 builder.Services
@@ -30,7 +29,6 @@ builder.Services
 var app = builder.Build();
 app.UseSerilogRequestLogging();
 
-// TODO Global error handler
 app.UseCors(c => c
     .AllowAnyOrigin()
     .AllowAnyMethod()
