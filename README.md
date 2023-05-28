@@ -15,16 +15,20 @@ Politicz.News is a reference project that demonstrates the usage of Mediator, En
 - Minimal API
 - Docker
 
+## Environment variables
+```text
+- NewsApi_Database__ConnectionString
+- NewsApi_JwtSettings__Authority
+- NewsApi_JwtSettings__Audience
+```
+
 ## Getting Started
 
 To get started with Politicz.News, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/yourusername/Politicz.News.git`
-2. Install the required dependencies using NuGet: `dotnet restore`
-3. Configure the database connection string in `appsettings.json`
-4. Apply database migrations: `dotnet ef database update`
-5. Build the Docker image: `docker build -t politicznews .`
-6. Run the Docker container: `docker run -p 8080:80 politicznews`
+2. Build the Docker image: `docker build -t politicznews .`
+3. Run the Docker container with all necessary env variables: `docker run -p 8080:80 politicznews`
 
 ## Contributing
 
