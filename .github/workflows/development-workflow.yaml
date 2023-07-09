@@ -1,6 +1,7 @@
 name: Politi.cz News development workflow
 
 on:
+    workflow_dispatch:
     push:
     pull_request:
         branches: [ main ]
