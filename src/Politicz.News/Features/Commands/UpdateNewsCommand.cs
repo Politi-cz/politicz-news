@@ -17,7 +17,6 @@ public sealed class UpdateNewsHandler : IRequestHandler<UpdateNewsCommand, OneOf
         UpdateNewsCommand command,
         CancellationToken cancellationToken)
     {
-        // TODO Validation through Behaviour Pipeline, (nick chapsas video)
         int result = await _dbContext.News.Where(x => x.ExternalId == command.Id)
             .ExecuteUpdateAsync(
                 s => s
